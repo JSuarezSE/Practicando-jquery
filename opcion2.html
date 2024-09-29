@@ -1,0 +1,52 @@
+<h1>CHAO MUNDO OPCION 2</h1>
+<span><input type="ola" style="margin-right: 10px;" id="input1"><input type="ola" id="input2"> <button
+    class="btn btn-primary" type="button" id="btnBuscar">Click</button></span>
+<table id="example" class="table table-striped" style="width:100%">
+
+</table>
+<script>
+
+  $('#btnBuscar').click(() => {
+    $.ajax({
+      type: 'GET',
+      url: `https://rickandmortyapi.com/api/character/?name=${$('#input1').val()}&status=alive`,
+      success: function (response) {
+        let tableDatos = [];
+
+        // Itera sobre los resultados para crear una fila por cada personaje
+        response.results.forEach(character => {
+          tableDatos.push([
+            character.id,
+            character.status,
+            character.species,
+            character.name,
+            character.gender,
+            character.created
+          ]);
+        });
+
+        // Destruir la tabla existente si ya fue inicializada
+        if ($.fn.DataTable.isDataTable('#example')) {
+          $('#example').DataTable().destroy();
+        }
+
+        // Inicializa la tabla con los nuevos datos
+        $('#example').DataTable({
+          columns: [
+            { title: 'Id' },
+            { title: 'Status' },
+            { title: 'Species' },
+            { title: 'Nombre' },
+            { title: 'Genero' },
+            { title: 'Fecha' }
+          ],
+          data: tableDatos
+        });
+      },
+      error: function () {
+        alert("ERROR")
+      }
+    });
+
+  })
+</script>
