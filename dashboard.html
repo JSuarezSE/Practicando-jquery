@@ -1,54 +1,70 @@
-<h1>Busqueda de personaje por id</h1>
-<form class="row g-3">
-  <div class="col-auto">
-    <input class="form-control" type="text" placeholder="Id" aria-label="default input example" id="input1">
-  </div>
-  <div class="col-auto">
-    <button class="btn btn-primary" type="button" id="btnBuscar">Buscar</button>
-  </div>
-</form>
+<h1 class="p-1 ">Personajes de Rick y morty</h1>
+<div class="table-responsive">
+  <table id="example" class="table table-dark table-striped p-1 " style="width:100%">
+  </table>
+</div>
 
-<table id="example" class="table table-striped" style="width:100%">
-
-</table>
 <script>
+  /*
+    async function get() {
+  
+      const response = await fetch('https://rickandmortyapi.com/api/character');
+      let dataDos = await response.json();
+      let tableDatos = dataDos.results.map(character => [
+        character.id,
+        character.status,
+        character.species,
+        character.name,
+        character.gender,
+        character.created
+  
+      ]);
+      $('#example').DataTable({
+        columns: [
+          { title: 'Id' },
+          { title: 'Status' },
+          { title: 'Species' },
+          { title: 'Nombre' },
+          { title: 'Genero' },
+          { title: 'Fecha' }
+        ],
+        data: tableDatos
+      });
+    }
+    */
 
-  $('#btnBuscar').click(() => {
-    $.ajax({
-      type: 'GET',
-      url: `https://rickandmortyapi.com/api/character/${$('#input1').val()}`,
-      success: function (character) {
-        let tableDatos = [[
+  $.ajax({
+    type: 'GET',
+    url: 'https://rickandmortyapi.com/api/character',
+    success: function (response) {
+      let tableDatos = [];
+
+
+      response.results.forEach(character => {
+        tableDatos.push([
           character.id,
           character.status,
           character.species,
           character.name,
           character.gender,
           character.created
-        ]];
+        ]);
+      });
 
-        // Destruir la tabla existente si ya fue inicializada
-        if ($.fn.DataTable.isDataTable('#example')) {
-          $('#example').DataTable().destroy();
-        }
+      $('#example').DataTable({
+        columns: [
+          { title: 'Id' },
+          { title: 'Status' },
+          { title: 'Species' },
+          { title: 'Nombre' },
+          { title: 'Genero' },
+          { title: 'Fecha' }
+        ],
+        data: tableDatos
+      });
+    },
+    error: function () {
+    }
+  });
 
-        // Inicializa la tabla con los nuevos datos
-        $('#example').DataTable({
-          columns: [
-            { title: 'Id' },
-            { title: 'Status' },
-            { title: 'Species' },
-            { title: 'Nombre' },
-            { title: 'Genero' },
-            { title: 'Fecha' }
-          ],
-          data: tableDatos
-        });
-      },
-      error: function () {
-        alert("ERROR")
-      }
-    });
-
-  })
 </script>
