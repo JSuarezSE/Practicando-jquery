@@ -7,7 +7,7 @@
   </div>
 </form>
 <script>
-  $("#btnBuscar").on("click", function ola() {
+  $("#btnBuscar").on("click", function () {
     $.ajax({
       type: 'GET',
       url: 'https://rickandmortyapi.com/api/character',
@@ -15,24 +15,38 @@
 
         $("#personajes").html('');
         response.results.forEach(character => {
+
+          let cardClass = (character.status === 'Alive') ? 'card h-100' : 'card bg-primary h-100';
+
+          let statusIcon = '';
+          if (character.status === 'Alive') {
+            statusIcon = '<i class="fa-solid fa-check-circle text-success"></i>';
+          } else if (character.status === 'Dead') {
+            statusIcon = '<i class="fa-solid fa-times-circle text-danger"></i>';
+          } else {
+            statusIcon = '<i class="fa-solid fa-question-circle text-secondary"></i>';
+          }
+
           $("#personajes").append(`
-              <div class="col">
-                <div class="card h-100">
-                  <img src="${character.image}" class="card-img-top img-fluid img-thumbnail" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">${character.name + "ola"}</h5>
-                  <p class="card-text">${character.status} ${character.species} ${character.gender} ${character.origin.name} </p>
-                </div>
-                </div>   
+          <div class="col">
+            <div class="${cardClass}">
+              <img src="${character.image}" class="rounded img-fluid img-thumbnail mx-auto d-block mt-2" style="width: 200px;" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">${character.name}</h5>
+                <p class="card-text">
+                  ${statusIcon} ${character.status} ${character.species} ${character.gender} ${character.origin.name}
+                </p>
               </div>
-                                  `)
+            </div>   
+          </div>
+        `);
         });
       },
       error: function () {
+        alert("ERROR");
       }
     });
-
-  })
+  });
   /*
    <div id="personajes" class="row row-cols-1 row-cols-md-3 g-4">
 
