@@ -16,7 +16,7 @@
         $("#personajes").html('');
         response.results.forEach(character => {
 
-          let cardClass = (character.status === 'Alive') ? 'card h-100' : 'card bg-primary h-100';
+          let cardClass = (character.status === 'Alive') ? 'card border-success ' : 'card border-danger ';
 
           let statusIcon = '';
           if (character.status === 'Alive') {
@@ -29,9 +29,9 @@
 
           $("#personajes").append(`
           <div class="col">
-            <div class="${cardClass}">
-              <img src="${character.image}" class="rounded img-fluid img-thumbnail mx-auto d-block mt-2" style="width: 200px;" alt="...">
-              <div class="card-body">
+            <div class="${cardClass}" style="border-width: 3px;  background-color: var(--color-secundario);">
+              <img src="${character.image}" class="rounded img-fluid mx-auto d-block mt-2 px-1" style="width: 200px;" alt="...">
+              <div class="card-body text-light">
                 <h5 class="card-title">${character.name}</h5>
                 <p class="card-text">
                   ${statusIcon} ${character.status} ${character.species} ${character.gender} ${character.origin.name}
