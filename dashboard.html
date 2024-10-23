@@ -3,6 +3,7 @@
     <h1 class="p-1">Personajes de Rick y morty <button class="btn btn-primary" type="button" id="btnBuscar">Mostrar
         Personajes</button></h1>
   </div>
+
   <div id="personajes" class="row row-cols-2 row-cols-md-3 g-5 mt-0">
   </div>
 </form>
@@ -33,9 +34,10 @@
               <img src="${character.image}" class="rounded img-fluid mx-auto d-block mt-2 px-1" style="width: 200px;" alt="...">
               <div class="card-body text-light">
                 <h5 class="card-title">${character.name}</h5>
-                <p class="card-text">
-                  ${statusIcon} ${character.status} ${character.species} ${character.gender} ${character.origin.name}
-                </p>
+                <p class="card-text mb-1"> <strong>Status:</strong> ${statusIcon} ${character.status}</p>
+                <p class="card-text mb-1"> <strong>Especie:</strong> ${character.species} </p>
+                <p class="card-text mb-1"> <strong>Genero:</strong> ${character.gender} </p>
+                <p class="card-text mb-1"> <strong>Origen:</strong> ${character.origin.name}</p>
               </div>
             </div>   
           </div>
